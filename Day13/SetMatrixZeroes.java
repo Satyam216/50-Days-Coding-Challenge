@@ -53,21 +53,30 @@ class Solution {
 public class SetMatrixZeroes {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        String[] rows = input.split(",");
+        String input = sc.nextLine().trim();
 
-        int[][] querries = new int[rows.length][];
+        input = input.replaceAll("\\[\\[", "").replaceAll("]]", "");
+        String[] rows = input.split("],\\s*\\[");
 
+        int[][] matrix = new int[rows.length][];
         for (int i = 0; i < rows.length; i++) {
-            String[] cols = rows[i].split("\\s+");
-            querries[i] = new int[cols.length];
-            for (int j = 0; j < cols.length; j++) {
-                querries[i][j] = Integer.parseInt(cols[j]);
+            String[] elements = rows[i].split(",");
+            matrix[i] = new int[elements.length];
+            for (int j = 0; j < elements.length; j++) {
+                matrix[i][j] = Integer.parseInt(elements[j].trim());
             }
         }
+
         Solution ob = new Solution();
-        ob.setZeroes(querries);
-        System.out.println(Arrays.deepToString(querries));
+        ob.setZeroes(matrix);
+
+        // Printing in same nested array format
+        System.out.print("[");
+        for (int i = 0; i < matrix.length; i++) {
+            System.out.print(Arrays.toString(matrix[i]));
+            if (i < matrix.length - 1) System.out.print(",");
+        }
+        System.out.println("]");
         sc.close();
     }
 }
